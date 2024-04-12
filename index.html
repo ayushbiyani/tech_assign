@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORI-CM-Bush Temperature Dashboard</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  .temperature {
+    margin-bottom: 10px;
+  }
+  .status {
+    font-weight: bold;
+  }
+  .green {
+    color: green;
+  }
+  .yellow {
+    color: yellow;
+  }
+  .red {
+    color: red;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>ORI-CM-Bush Temperature Dashboard</h1>
+  <div class="temperature" id="temperature1">
+    Temperature 1: <span class="status" id="status1"></span>
+  </div>
+  <div class="temperature" id="temperature2">
+    Temperature 2: <span class="status" id="status2"></span>
+  </div>
+  <div class="temperature" id="temperature3">
+    Temperature 3: <span class="status" id="status3"></span>
+  </div>
+  <div>
+    <label for="threshold">Temperature Threshold:</label>
+    <input type="number" id="threshold" value="25">
+    <button onclick="setThreshold()">Set Threshold</button>
+  </div>
+</div>
+
+<script>
+  // Initial threshold value
+  let threshold = 25;
+
+  // Update temperature status based on threshold
+  function updateTemperatureStatus(temperatureElement, statusElement, temperature) {
+    if (temperature <= threshold) {
+      temperatureElement.className = "status green";
+      statusElement.textContent = "Normal";
+    } else if (temperature > threshold && temperature <= threshold + 5) {
+      temperatureElement.className = "status yellow";
+      statusElement.textContent = "High";
+    } else {
+      temperatureElement.className = "status red";
+      statusElement.textContent = "Hotspot";
+    }
+  }
+
+  // Set threshold
+  function setThreshold() {
+    threshold = parseInt(document.getElementById("threshold").value);
+    // Update temperature status after changing threshold
+    updateTemperatureStatus(document.getElementById("temperature1"), document.getElementById("status1"), parseFloat(document.getElementById("temperature1").textContent));
+    updateTemperatureStatus(document.getElementById("temperature2"), document.getElementById("status2"), parseFloat(document.getElementById("temperature2").textContent));
+    updateTemperatureStatus(document.getElementById("temperature3"), document.getElementById("status3"), parseFloat(document.getElementById("temperature3").textContent));
+  }
+
+  // Simulated temperature values (replace with real-time data)
+  const temperature1 = Math.random() * 50;
+  const temperature2 = Math.random() * 50;
+  const temperature3 = Math.random() * 50;
+
+  // Display initial temperature statuses
+  updateTemperatureStatus(document.getElementById("temperature1"), document.getElementById("status1"), temperature1);
+  updateTemperatureStatus(document.getElementById("temperature2"), document.getElementById("status2"), temperature2);
+  updateTemperatureStatus(document.getElementById("temperature3"), document.getElementById("status3"), temperature3);
+</script>
+</body>
+</html>
